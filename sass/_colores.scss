@@ -1,0 +1,112 @@
+$clr-black: #1c1c1c;
+$clr-gray: #ececec;
+$clr-white: #f7f7f7;
+
+$type-normal: #a8a878;
+$type-fire: #f08030;
+$type-water: #6890f0;
+$type-grass: #78c850;
+$type-electric: #f8d030;
+$type-ice: #98d8d8;
+$type-fighting: #c03028;
+$type-poison: #a040a0;
+$type-ground: #e0c068;
+$type-flying: #a890f0;
+$type-psychic: #f85888;
+$type-bug: #a8b820;
+$type-rock: #b8a038;
+$type-ghost: #705898;
+$type-dark: #705848;
+$type-dragon: #7038f8;
+$type-steel: #b8b8d0;
+$type-fairy: #f0b6bc;
+
+.normal {
+  background-color: $type-normal;
+  color: $clr-black;
+}
+
+.fire {
+  background-color: $type-fire;
+  color: $clr-black;
+}
+
+.water {
+  background-color: $type-water;
+  color: $clr-white;
+}
+
+.grass {
+  background-color: $type-grass;
+  color: $clr-black;
+}
+
+.electric {
+  background-color: $type-electric;
+  color: $clr-black;
+}
+
+.ice {
+  background-color: $type-ice;
+  color: $clr-black;
+}
+
+.fighting {
+  background-color: $type-fighting;
+  color: $clr-white;
+}
+
+.poison {
+  background-color: $type-poison;
+  color: $clr-white;
+}
+
+.ground {
+  background-color: $type-ground;
+  color: $clr-black;
+}
+
+.flying {
+  background-color: $type-flying;
+  color: $clr-black;
+}
+
+.psychic {
+  background-color: $type-psychic;
+  color: $clr-black;
+}
+
+.bug {
+  background-color: $type-bug;
+  color: $clr-black;
+}
+
+.rock {
+  background-color: $type-rock;
+  color: $clr-black;
+}
+
+.ghost {
+  background-color: $type-ghost;
+  color: $clr-white;
+}
+
+.dark {
+  background-color: $type-dark;
+  color: $clr-white;
+}
+
+.dragon {
+  background-color: $type-dragon;
+  color: $clr-white;
+}
+
+.steel {
+  background-color: $type-steel;
+  color: $clr-black;
+}
+
+.fairy {
+  background-color: $type-fairy;
+  color: $clr-black;
+}

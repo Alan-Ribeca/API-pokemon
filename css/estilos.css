@@ -1,0 +1,246 @@
+.normal {
+  background-color: #a8a878;
+  color: #1c1c1c;
+}
+
+.fire {
+  background-color: #f08030;
+  color: #1c1c1c;
+}
+
+.water {
+  background-color: #6890f0;
+  color: #f7f7f7;
+}
+
+.grass {
+  background-color: #78c850;
+  color: #1c1c1c;
+}
+
+.electric {
+  background-color: #f8d030;
+  color: #1c1c1c;
+}
+
+.ice {
+  background-color: #98d8d8;
+  color: #1c1c1c;
+}
+
+.fighting {
+  background-color: #c03028;
+  color: #f7f7f7;
+}
+
+.poison {
+  background-color: #a040a0;
+  color: #f7f7f7;
+}
+
+.ground {
+  background-color: #e0c068;
+  color: #1c1c1c;
+}
+
+.flying {
+  background-color: #a890f0;
+  color: #1c1c1c;
+}
+
+.psychic {
+  background-color: #f85888;
+  color: #1c1c1c;
+}
+
+.bug {
+  background-color: #a8b820;
+  color: #1c1c1c;
+}
+
+.rock {
+  background-color: #b8a038;
+  color: #1c1c1c;
+}
+
+.ghost {
+  background-color: #705898;
+  color: #f7f7f7;
+}
+
+.dark {
+  background-color: #705848;
+  color: #f7f7f7;
+}
+
+.dragon {
+  background-color: #7038f8;
+  color: #f7f7f7;
+}
+
+.steel {
+  background-color: #b8b8d0;
+  color: #1c1c1c;
+}
+
+.fairy {
+  background-color: #f0b6bc;
+  color: #1c1c1c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #ececec;
+}
+
+header {
+  padding-block: 1rem;
+  box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, 0.5);
+}
+header .nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-inline: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+header .nav-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+header ul {
+  list-style-type: none;
+}
+header .btn-header {
+  padding: 0.5rem;
+  border-radius: 100vmax;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+  transition: 0.2s;
+}
+header .btn-header:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.25);
+}
+
+main {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pokemon-todos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media screen and (min-width: 470px) {
+  .pokemon-todos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (min-width: 700px) {
+  .pokemon-todos {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.pokemon {
+  border-radius: 1rem;
+  background-color: #f7f7f7;
+  box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.25);
+  padding-block: 1rem;
+  text-transform: uppercase;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.pokemon-id-back {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 6rem;
+  font-weight: 800;
+  z-index: -1;
+  color: #ececec;
+}
+.pokemon-imagen {
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.pokemon-imagen img {
+  width: 100%;
+  max-width: 6rem;
+}
+
+.pokemon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  align-items: center;
+  text-align: center;
+}
+.pokemon-info .nombre-contenedor {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pokemon-info .nombre-contenedor .pokemon-id {
+  background-color: #ececec;
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.pokemon-info .nombre-contenedor .pokemon-nombre {
+  font-size: 1.4rem;
+}
+.pokemon-info .pokemon-tipos {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pokemon-info .pokemon-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+.pokemon-info .pokemon-stats .stat {
+  background-color: #ececec;
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
+}
+
+.tipo {
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
+}
+
+/*# sourceMappingURL=estilos.css.map */
