@@ -11,7 +11,10 @@
 <body>
     <header>
         <nav class="nav">
-            <!-- buscar un logo para poner aca como titulo de la pag o algo parecido -->
+            <!--1- buscar un logo para poner aca como titulo de la pag o algo parecido,
+                2- terminar de configurar el spinner
+                3- poner un mensaje si no hay pokemones "como en el caso de "DARK" "
+            -->
             <ul class="nav-list">
                 <li class="nav-item"><button class="btn btn-header" id="ver-todos">Ver todos</button></li>
                 <li class="nav-item"><button class="btn btn-header normal" id="normal">Normal</button></li>
@@ -36,7 +39,8 @@
         </nav>
     </header>
     <main>
-
+        <div class="loader"></div>
+        
         <div id="todos">
             <div class="pokemon-todos" id="listaPokemon">
 
@@ -45,7 +49,7 @@
     </main>
 
 
-    <script src="./main.js"></script>
+    <script src="./main.js" type="module"></script>
 </body>
 
 </html>
