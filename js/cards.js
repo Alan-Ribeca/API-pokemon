@@ -29,6 +29,9 @@ function mostrarPokemon(poke) {
         pokeId = "0" + pokeId
     }
 
+    const divOculto = document.createElement("div");
+    divOculto.classList.add("ver-mas");
+    divOculto.innerHTML = `<p class="mensajeVerMas">Ver mas...</p>`
     const div = document.createElement("div");
     div.classList.add("pokemon");
     div.innerHTML = `
@@ -51,6 +54,7 @@ function mostrarPokemon(poke) {
     </div>
     `;
     listaPokemon.append(div)
+    div.append(divOculto)
 }
 
 botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
