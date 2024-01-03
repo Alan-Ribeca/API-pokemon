@@ -1,7 +1,9 @@
+import { spinner } from "./spinner.js";
 export { mostrarPokemon, botonesHeader }
 
 const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn-header");
+const main = document.querySelector(".main");
 let url = "https://pokeapi.co/api/v2/pokemon/";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,25 +12,26 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((respuesta) => respuesta.json())
             .then(data => {
                 mostrarPokemon(data);
+                
             });
     }
 })
 
 function mostrarPokemon(poke) {
+    
+    let tipos = poke.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
+    tipos = tipos.join("");
 
-        let tipos = poke.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
-        tipos = tipos.join("");
+    let pokeId = poke.id.toString();
+    if (pokeId.length === 1) {
+        pokeId = "00" + pokeId
+    } else if (pokeId.length === 2) {
+        pokeId = "0" + pokeId
+    }
 
-        let pokeId = poke.id.toString();
-        if (pokeId.length === 1) {
-            pokeId = "00" + pokeId
-        } else if (pokeId.length === 2) {
-            pokeId = "0" + pokeId
-        }
-
-        const div = document.createElement("div");
-        div.classList.add("pokemon");
-        div.innerHTML = `
+    const div = document.createElement("div");
+    div.classList.add("pokemon");
+    div.innerHTML = `
     <p class="pokemon-id-back">#${pokeId}</p>
     <div class="pokemon-imagen">
         <img src="${poke.sprites.other["official-artwork"].front_default}" alt="${poke.name}">
@@ -47,27 +50,50 @@ function mostrarPokemon(poke) {
         </div>
     </div>
     `;
-        listaPokemon.append(div)
-    }
+    listaPokemon.append(div)
+}
 
 botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
-        const botonId = event.currentTarget.id;
+    const botonId = event.currentTarget.id;
 
-        listaPokemon.innerHTML = "";
+    const mensajeExistente = document.querySelector(".mensaje");
+    if(mensajeExistente) {
+        mensajeExistente.remove()
+    }
 
-        for (let i = 1; i <= 151; i++) {
-            fetch(url + i)
-                .then((respuesta) => respuesta.json())
-                .then(data => {
+    listaPokemon.innerHTML = "";
+    spinner.style.display = "block"
 
+    let contadorPokemon = 0;
+    for (let i = 1; i <= 151; i++) {
+        fetch(url + i)
+            .then((respuesta) => respuesta.json())
+            .then(data => {
+                setTimeout(() => {
                     if (botonId === "ver-todos") {
                         mostrarPokemon(data)
+                        contadorPokemon++;
                     } else {
                         const tipos = data.types.map(type => type.type.name);
                         if (tipos.some(tipo => tipo.includes(botonId))) {
                             mostrarPokemon(data);
+                            contadorPokemon++;
                         }
                     }
-                });
-        }
-    }))
+                    spinner.style.display = "none";
+
+                    if(i === 151 && contadorPokemon === 0) {
+                        mensajeSinPokemones(botonId)
+                    }
+                }, 1500);
+            });
+    }
+}))
+
+function mensajeSinPokemones(tipos) {
+    const mensaje = document.createElement("h2");
+    mensaje.classList.add("mensaje")
+    mensaje.textContent = `No hay pokemones de tipo ${tipos}`
+    
+    main.appendChild(mensaje)
+}

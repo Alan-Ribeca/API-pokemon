@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Libre Baskerville', serif;
 }
 
 button {
@@ -49,7 +49,6 @@ header {
     border-radius: 100vmax;
     cursor: pointer;
     text-transform: uppercase;
-    font-weight: 600;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
     transition: 0.2s;
 
@@ -60,7 +59,7 @@ header {
   }
 }
 
-main {
+.main {
   padding: 2rem;
   max-width: 1000px;
   margin: 0 auto;
@@ -166,4 +165,12 @@ main {
 .tipo {
   padding: 0.25rem 0.5rem;
   border-radius: 100vmax;
+}
+
+.mensaje {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
