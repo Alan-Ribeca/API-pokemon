@@ -26,6 +26,23 @@
 }
 
 .mensajeVerMas {
-    font-size: 1.5rem;
-    font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.enlarge {
+  transform: scale(1.5);
+  transition: transform 0.5s ease-in-out;
+  z-index: 10;
+  height: 27rem;
+
+  @media screen and (max-width: 470px) {
+    transform: scale(1.2);
+    transition: transform 0.5s ease-in-out;
+    z-index: 10;
+  }
+}
+
+.fade {
+  opacity: 0.2;
 }

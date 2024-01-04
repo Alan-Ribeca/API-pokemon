@@ -1,10 +1,12 @@
-import { spinner } from "./spinner.js";
+import { spinner, } from "./spinner.js";
 export { mostrarPokemon, botonesHeader }
 
 const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn-header");
 const main = document.querySelector(".main");
 let url = "https://pokeapi.co/api/v2/pokemon/";
+let cardAbierta = false;
+let contenidoOriginal = {};
 
 document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= 151; i++) {
@@ -12,13 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((respuesta) => respuesta.json())
             .then(data => {
                 mostrarPokemon(data);
-                
             });
     }
 })
 
 function mostrarPokemon(poke) {
-    
     let tipos = poke.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
     tipos = tipos.join("");
 
@@ -31,9 +31,10 @@ function mostrarPokemon(poke) {
 
     const divOculto = document.createElement("div");
     divOculto.classList.add("ver-mas");
-    divOculto.innerHTML = `<p class="mensajeVerMas">Ver mas...</p>`
+    divOculto.innerHTML = `<p class="mensajeVerMas">Mas datos...</p>`
     const div = document.createElement("div");
     div.classList.add("pokemon");
+    div.id = `pokemon-${pokeId}`
     div.innerHTML = `
     <p class="pokemon-id-back">#${pokeId}</p>
     <div class="pokemon-imagen">
@@ -53,6 +54,11 @@ function mostrarPokemon(poke) {
         </div>
     </div>
     `;
+
+    div.addEventListener("click", () => {
+        clickCard(div.id)
+    })
+
     listaPokemon.append(div)
     div.append(divOculto)
 }
@@ -61,7 +67,7 @@ botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
     const botonId = event.currentTarget.id;
 
     const mensajeExistente = document.querySelector(".mensaje");
-    if(mensajeExistente) {
+    if (mensajeExistente) {
         mensajeExistente.remove()
     }
 
@@ -86,7 +92,7 @@ botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
                     }
                     spinner.style.display = "none";
 
-                    if(i === 151 && contadorPokemon === 0) {
+                    if (i === 151 && contadorPokemon === 0) {
                         mensajeSinPokemones(botonId)
                     }
                 }, 1500);
@@ -98,6 +104,53 @@ function mensajeSinPokemones(tipos) {
     const mensaje = document.createElement("h2");
     mensaje.classList.add("mensaje")
     mensaje.textContent = `No hay pokemones de tipo ${tipos}`
-    
+
     main.appendChild(mensaje)
+}
+
+function clickCard(id) {
+    let cards = document.querySelectorAll('.pokemon');
+
+    if (!cardAbierta) {
+        cards.forEach((card) => {
+            if (card.getAttribute('id') === id) {
+                card.classList.add('enlarge');
+                cardAbierta = true;
+                nuevoDatos(id)
+            } else {
+                card.classList.add('fade');
+            }
+        });
+    } else if (cardAbierta && document.getElementById(id).classList.contains('enlarge')) {
+        cards.forEach((card) => {
+            card.classList.remove('enlarge');
+            card.classList.remove('fade');
+        });
+        cardAbierta = false;
+        let card = document.getElementById(id);
+        card.innerHTML = contenidoOriginal[id];
+    }
+}
+
+function nuevoDatos(id) {
+    let card = document.getElementById(id);
+    contenidoOriginal[id] = card.innerHTML;
+    while (card.firstChild) {
+        card.removeChild(card.firstChild);
+    }
+
+    let numeroPokemon = Number(id.split('-')[1]);
+
+    // Haz una nueva solicitud a la API de Pokémon para obtener los datos del Pokémon seleccionado
+    fetch(url + numeroPokemon)
+        .then(response => response.json())
+        .then(data => {
+            // Ahora puedes usar los datos del Pokémon para agregar nuevos elementos a la tarjeta
+            let nuevoNombre = document.createElement('h2');
+            nuevoNombre.textContent = data.name;
+            card.appendChild(nuevoNombre);
+
+            // Agrega el resto de los nuevos datos a la tarjeta de la misma manera
+        })
+        .catch(error => console.error('Error:', error));
 }
