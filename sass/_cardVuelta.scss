@@ -1,0 +1,31 @@
+.vuelta-img {
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: center;
+
+  .img-poke-vuelta {
+    width: 100%;
+    max-width: 6rem;
+  }
+}
+
+.stat {
+    display: block;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+.dos {
+    display: none;
+}
+
+.tres {
+    display: none;
+}
+
+.cuatro {
+    display: none;
+}
