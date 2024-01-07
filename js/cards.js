@@ -127,20 +127,8 @@ function clickCard(id) {
             }
         });
     }
-    // } else if (cardAbierta && document.getElementById(id).classList.contains('enlarge')) {
-    //     cards.forEach((card) => {
-    //         card.classList.remove('enlarge');
-    //         card.classList.remove('fade');
-    //     });
-    //     cardAbierta = false;
-    //     let card = document.getElementById(id);
-    //     card.innerHTML = contenidoOriginal[id];
-    //     // agrego el cursor pointer
-    //     document.querySelectorAll('.pokemon').forEach((elemento) => {
-    //         elemento.style.cursor = 'pointer';
-    //     });
-    // }
 }
+
 
 function nuevoDatos(id) {
     let card = document.getElementById(id);
@@ -150,22 +138,61 @@ function nuevoDatos(id) {
     }
 
     let numeroPokemon = Number(id.split('-')[1]);
+    let statsPorcentaje = {
+        HP: "",
+        ATTACK: "",
+        DEFENSE: "",
+        specialAttack: "",
+        specialDefense: "",
+        seed: "",
+    }
 
-    // Haz una nueva solicitud a la API de Pokémon para obtener los datos del Pokémon seleccionado
     fetch(url + numeroPokemon)
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            let stats = data.stats.map((item) => `<p class="stat">${item.stat.name}: ${item.base_stat}</p>`).join("");
+
+            let stats = data.stats.map((item) => `
+            <div class="vuelta-stats">
+                <p class="p-stats">${item.stat.name}</p>
+                <div class="progress-bar">
+                    <div class="progress-value" style="width: ${item.base_stat}%">
+                    <span class="porcentaje">${item.base_stat}%</span>
+                    </div>
+                </div>
+            </div>`
+            ).join("");
+
             let tipos = data.types.map((type) => `<p class="${type.type.name} tipoVuelta">${type.type.name}</p>`);
             let habilidades = data.abilities.map((habilidad) => habilidad.ability.name).join(", ");
+            let movimientos = data.moves.map((movimiento) => movimiento.move.name).join(" - ");
+
             tipos = tipos.join("");
-            // Ahora puedes usar los datos del Pokémon para agregar nuevos elementos a la tarjeta
+            // Resto del código...
+
             const cardVuelta = document.createElement("div");
             cardVuelta.classList.add("card-click");
             cardVuelta.innerHTML = `
-            <div class = "vuelta-img">
+            <div class="vuelta-img">
                 <img src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}" class="img-poke-vuelta">
+                <button class="button">
+                <div class="button-box">
+                <span class="button-elem">
+                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                ></path>
+                </svg>
+                </span>
+                <span class="button-elem">
+                <svg viewBox="0 0 46 40">
+                <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                ></path>
+                </svg>
+                </span>
+                </div>
+                </button>
             </div>
             <h2 class="pokemon-nombre">${data.name}</h2>
             <div class="tipos-vuelta">
@@ -173,8 +200,6 @@ function nuevoDatos(id) {
             </div>
 
             <div class="vuelta-info">
-                <div class="vuelta-nombre">
-                </div>
                 <div class="btnInfo"> 
                     <button class="btn about">About<hr class="linea"></button>
                     <button class="btn baseStats">Base Stats<hr class="linea"></button>
@@ -190,22 +215,45 @@ function nuevoDatos(id) {
                     </ul>
                 </div>
                 <div class="dos"> 
-                    <div class="vuelta-stats">
-                        <p class="p-stats">Combate</p>
-                        ${stats}
-                    </div>
+                    ${stats}
                 </div>
                 <div class="tres"> 
-                        3
+                    <p class="movimientos">Movimientos</p>
+                    <p class="fullMovimientos"> ${movimientos}</p>
                 </div>
             </div>
-            `;
+        `;
             card.appendChild(cardVuelta);
-            clickBoton()
+            clickBoton();
+
+
+            // const btnCerrar = document.querySelector('.button');
+            // btnCerrar.addEventListener("click", () => {
+            //     console.log("click");
+            //     document.querySelectorAll('.pokemon.enlarge').forEach((card) => {
+            //         card.addEventListener('click', () => {
+            //             if (card.classList.contains('enlarge')) {
+            //                 card.classList.remove("enlarge");
+            //                 card.classList.remove("fade");
+            //                 card.style.cursor = 'pointer';
+            //                 card.style.paddingBlock = '';
+            //             } else {
+            //                 card.classList.remove("fade")
+            //             }
+            //         });
+            //     });
+            // });
+
+
+
         })
-        .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error));
 }
 
+// card.classList.remove("enlarge");
+// card.classList.remove("fade");
+// card.style.cursor = 'pointer';
+// card.style.paddingBlock = '';
 
 
 function clickBoton() {
@@ -215,7 +263,6 @@ function clickBoton() {
     botones.forEach((boton, index) => {
         const btnElement = document.querySelector(`.${boton}`);
         btnElement.addEventListener("click", () => {
-            console.log(`click en boton ${index + 1}`);
             divs.forEach((div, divIndex) => {
                 document.querySelector(`.${div}`).style.display = divIndex === index ? "block" : "none";
             });
@@ -227,5 +274,5 @@ function clickBoton() {
             btnElement.classList.add('btn-selected');
         });
     });
-    document.querySelector('.btn.about').click();
+    document.querySelector('.btn.baseStats').click();
 }
