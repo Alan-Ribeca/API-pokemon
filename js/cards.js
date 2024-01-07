@@ -120,6 +120,7 @@ function clickCard(id) {
                 // saco el cursor pointer
                 document.querySelectorAll('.pokemon').forEach((elemento) => {
                     elemento.style.cursor = 'auto';
+                    elemento.style.paddingBlock = 0;
                 });
             } else {
                 card.classList.add('fade');
@@ -156,7 +157,8 @@ function nuevoDatos(id) {
         .then(data => {
             console.log(data)
             let stats = data.stats.map((item) => `<p class="stat">${item.stat.name}: ${item.base_stat}</p>`).join("");
-            let tipos = data.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
+            let tipos = data.types.map((type) => `<p class="${type.type.name} tipoVuelta">${type.type.name}</p>`);
+            let habilidades = data.abilities.map((habilidad) => habilidad.ability.name).join(", ");
             tipos = tipos.join("");
             // Ahora puedes usar los datos del Pokémon para agregar nuevos elementos a la tarjeta
             const cardVuelta = document.createElement("div");
@@ -165,37 +167,43 @@ function nuevoDatos(id) {
             <div class = "vuelta-img">
                 <img src="${data.sprites.other["official-artwork"].front_default}" alt="${data.name}" class="img-poke-vuelta">
             </div>
+            <h2 class="pokemon-nombre">${data.name}</h2>
+            <div class="tipos-vuelta">
+                ${tipos}
+            </div>
 
-            <div class="pokemon-info">
+            <div class="vuelta-info">
                 <div class="vuelta-nombre">
-                    <h2 class="pokemon-nombre">${data.name}</h2>
-                    ${tipos}
                 </div>
                 <div class="btnInfo"> 
-                    <button class="about">About</button>
-                    <button class="baseStats">Base Stats</button>
-                    <button class="moves">Moves</button>
+                    <button class="btn about">About<hr class="linea"></button>
+                    <button class="btn baseStats">Base Stats<hr class="linea"></button>
+                    <button class="btn moves">Moves<hr class="linea"></button>
                 </div>
-
-                <div class="uno"> 1
-                    1
+            
+                <div class="uno"> 
+                    <p class="estadisticasGenerales">Estadisticas Generales:</p>
+                    <ul>
+                        <li>Heigth  ${data.height}m</li>
+                        <li>Weigth  ${data.weight}kg</li>
+                        <li>Abilities ${habilidades}</li>
+                    </ul>
                 </div>
                 <div class="dos"> 
                     <div class="vuelta-stats">
-                        <p class="p-stats">Estadisticas</p>
-                        <p class="statVuelta">${data.height}m</p>
-                        <p class="statVuelta">${data.weight}kg</p>
+                        <p class="p-stats">Combate</p>
                         ${stats}
                     </div>
                 </div>
-                <div class="tres"> 3 </div>
+                <div class="tres"> 
+                        3
+                </div>
             </div>
             `;
             card.appendChild(cardVuelta);
             clickBoton()
         })
         .catch(error => console.error('Error:', error));
-
 }
 
 
@@ -205,13 +213,19 @@ function clickBoton() {
     const divs = ["uno", "dos", "tres"];
 
     botones.forEach((boton, index) => {
-        document.querySelector(`.${boton}`).addEventListener("click", () => {
+        const btnElement = document.querySelector(`.${boton}`);
+        btnElement.addEventListener("click", () => {
             console.log(`click en boton ${index + 1}`);
             divs.forEach((div, divIndex) => {
                 document.querySelector(`.${div}`).style.display = divIndex === index ? "block" : "none";
             });
+
+            botones.forEach((boton) => {
+                document.querySelector(`.${boton}`).classList.remove('btn-selected');
+            });
+
+            btnElement.classList.add('btn-selected');
         });
     });
+    document.querySelector('.btn.about').click();
 }
-
-
