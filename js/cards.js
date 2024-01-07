@@ -5,7 +5,7 @@ const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn-header");
 const main = document.querySelector(".main");
 let url = "https://pokeapi.co/api/v2/pokemon/";
-let cardAbierta = false;
+let cardAbierta = null;
 let contenidoOriginal = {};
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -168,8 +168,6 @@ function nuevoDatos(id) {
             let movimientos = data.moves.map((movimiento) => movimiento.move.name).join(" - ");
 
             tipos = tipos.join("");
-            // Resto del código...
-
             const cardVuelta = document.createElement("div");
             cardVuelta.classList.add("card-click");
             cardVuelta.innerHTML = `
@@ -226,35 +224,35 @@ function nuevoDatos(id) {
             card.appendChild(cardVuelta);
             clickBoton();
 
+            const btnCerrar = document.querySelector(".button");
+            btnCerrar.addEventListener("click", (event) => {
+                event.stopPropagation();
 
-            // const btnCerrar = document.querySelector('.button');
-            // btnCerrar.addEventListener("click", () => {
-            //     console.log("click");
-            //     document.querySelectorAll('.pokemon.enlarge').forEach((card) => {
-            //         card.addEventListener('click', () => {
-            //             if (card.classList.contains('enlarge')) {
-            //                 card.classList.remove("enlarge");
-            //                 card.classList.remove("fade");
-            //                 card.style.cursor = 'pointer';
-            //                 card.style.paddingBlock = '';
-            //             } else {
-            //                 card.classList.remove("fade")
-            //             }
-            //         });
-            //     });
-            // });
+                let cards = document.getElementById(id);
+                console.log(cards)
+                cards.classList.remove("enlarge");
 
+                let pokemons = document.querySelectorAll('div.pokemon.fade');
+                pokemons.forEach((pokemon) => {
+                    pokemon.classList.remove('fade');
+                });
 
+                const ocultarDiv = document.querySelector(".card-click");
+                ocultarDiv.style.display = "none"
 
+                if (contenidoOriginal[id]) {
+                    cards.innerHTML = contenidoOriginal[id];
+                }
+
+                document.querySelectorAll('.pokemon').forEach((elemento) => {
+                    elemento.style.cursor = 'pointer';
+                    elemento.style.paddingBlock = "1rem";
+                });
+                cardAbierta = false;
+            })
         })
-    .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error:', error));
 }
-
-// card.classList.remove("enlarge");
-// card.classList.remove("fade");
-// card.style.cursor = 'pointer';
-// card.style.paddingBlock = '';
-
 
 function clickBoton() {
     const botones = ["about", "baseStats", "moves"];

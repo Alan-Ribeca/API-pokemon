@@ -345,6 +345,7 @@
 }
 .card-click .dos .vuelta-stats .progress-bar .progress-value {
   height: 100%;
+  max-width: 100%;
   border-radius: 5px;
   background: linear-gradient(90deg, #3498db, #6c02e8);
 }
