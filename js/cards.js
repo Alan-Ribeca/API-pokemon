@@ -138,20 +138,10 @@ function nuevoDatos(id) {
     }
 
     let numeroPokemon = Number(id.split('-')[1]);
-    let statsPorcentaje = {
-        HP: "",
-        ATTACK: "",
-        DEFENSE: "",
-        specialAttack: "",
-        specialDefense: "",
-        seed: "",
-    }
 
     fetch(url + numeroPokemon)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-
             let stats = data.stats.map((item) => `
             <div class="vuelta-stats">
                 <p class="p-stats">${item.stat.name}</p>
@@ -162,7 +152,6 @@ function nuevoDatos(id) {
                 </div>
             </div>`
             ).join("");
-
             let tipos = data.types.map((type) => `<p class="${type.type.name} tipoVuelta">${type.type.name}</p>`);
             let habilidades = data.abilities.map((habilidad) => habilidad.ability.name).join(", ");
             let movimientos = data.moves.map((movimiento) => movimiento.move.name).join(" - ");
@@ -221,6 +210,7 @@ function nuevoDatos(id) {
                 </div>
             </div>
         `;
+
             card.appendChild(cardVuelta);
             clickBoton();
 
@@ -229,7 +219,6 @@ function nuevoDatos(id) {
                 event.stopPropagation();
 
                 let cards = document.getElementById(id);
-                console.log(cards)
                 cards.classList.remove("enlarge");
 
                 let pokemons = document.querySelectorAll('div.pokemon.fade');
