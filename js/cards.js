@@ -142,16 +142,27 @@ function nuevoDatos(id) {
     fetch(url + numeroPokemon)
         .then(response => response.json())
         .then(data => {
-            let stats = data.stats.map((item) => `
-            <div class="vuelta-stats">
-                <p class="p-stats">${item.stat.name}</p>
-                <div class="progress-bar">
-                    <div class="progress-value" style="width: ${item.base_stat}%">
-                    <span class="porcentaje">${item.base_stat}%</span>
-                    </div>
-                </div>
-            </div>`
-            ).join("");
+            let stats = data.stats.map((item) => {
+                function getColor(porcentaje) {
+                    if (porcentaje <= 35) return 'linear-gradient(90deg, #e6f7ff , #8ad2ff)';
+                    if (porcentaje <= 59) return 'linear-gradient(90deg, #d4e6f1, #75c6ff)';
+                    if (porcentaje <= 80) return 'linear-gradient(90deg, #a3d9ff, #3498db)';
+                    if (porcentaje <= 100) return 'linear-gradient(90deg, #3498db, #6c02e8)';
+                    return 'linear-gradient(90deg, #6c02e8, #2c3e50)';
+                }
+                function getTextColor(porcentaje) {
+                    return porcentaje <= 50 ? '#000000' : 'white';
+                }
+                return `
+                    <div class="vuelta-stats">
+                        <p class="p-stats">${item.stat.name}</p>
+                        <div class="progress-bar">
+                            <div class="progress-value" style="width: ${item.base_stat}%; background: ${getColor(item.base_stat)};">
+                            <span class="porcentaje" style="color: ${getTextColor(item.base_stat)};">${item.base_stat}%</span>
+                            </div>
+                        </div>
+                    </div>`;
+            }).join("");
             let tipos = data.types.map((type) => `<p class="${type.type.name} tipoVuelta">${type.type.name}</p>`);
             let habilidades = data.abilities.map((habilidad) => habilidad.ability.name).join(", ");
             let movimientos = data.moves.map((movimiento) => movimiento.move.name).join(" - ");

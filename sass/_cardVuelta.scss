@@ -186,18 +186,17 @@
         margin-top: 5px;
         position: relative;
 
-        .progress-value {
+        .progress-value{
           height: 100%;
           max-width: 100%;
           border-radius: 5px;
-          background: linear-gradient(90deg, #3498db, #6c02e8);
         }
+
         .porcentaje {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          color: #fff;
         }
       }
     }
